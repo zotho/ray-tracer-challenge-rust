@@ -1,3 +1,6 @@
+use rayon::prelude::*;
+use rayon::slice::ChunksMut;
+
 use crate::Color;
 
 const MAXIMUM_PPM_LINE_LENGTH: usize = 70;
@@ -7,12 +10,16 @@ const MAXIMUM_PPM_LINE_LENGTH: usize = 70;
 /// The pixels are stored in a linear 1D array indexing a pixel is done with
 /// this formula `index = x + y * width`.
 pub struct Canvas {
-    width: usize,
-    height: usize,
+    pub width: usize,
+    pub height: usize,
     pixels: Vec<Color>,
 }
 
 impl Canvas {
+    pub fn chunks_mut(&mut self, n_lines: usize) -> ChunksMut<Color> {
+        self.pixels.par_chunks_mut(self.width * n_lines)
+    }
+
     /// Creates a new canvas with the given `height` and `width`. Each pixel will
     /// have a [`Color`] of black.
     ///
@@ -86,6 +93,14 @@ impl Canvas {
             col_counter = 0;
         }
         buffer.push('\n');
+        buffer
+    }
+
+    pub fn canvas_to_buffer(&self) -> Vec<u8> {
+        let mut buffer = Vec::with_capacity(self.pixels.len() * 3);
+        for color in &self.pixels {
+            buffer.extend(color.to_u8().iter());
+        }
         buffer
     }
 

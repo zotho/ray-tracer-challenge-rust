@@ -2,6 +2,8 @@
 use crate::Color;
 use crate::{Canvas, Matrix, Point, Ray, World, IDENTITY};
 
+use rayon::prelude::*;
+
 /// Encapsulates the view and provides an interface for rendering the world
 /// onto a [`Canvas`]. The [`Canvas`] is exactly one unit in front of the
 /// `Camera`.
@@ -49,7 +51,7 @@ impl Camera {
 
     /// Returns a ray that starts at the camera and passes through the given
     /// `x` and `y` pixel on the canvas.
-    pub fn ray_for_pixel(&mut self, px: f64, py: f64) -> Ray {
+    pub fn ray_for_pixel(&self, px: f64, py: f64) -> Ray {
         // the offset from the edge of the canvas to the pixel's center
         let x_offset = (px + 0.5) * self.pixel_size;
         let y_offset = (py + 0.5) * self.pixel_size;
@@ -74,7 +76,7 @@ impl Camera {
     /// `ray_for_pixel` function. The computed [`Ray`] is then projected
     /// into the [`World`] using the `color_at` function of the [`World`] to get
     /// a [`Color`] for an object intersected by the [`Ray`] if there is one.
-    pub fn render(&mut self, world: &World) -> Canvas {
+    pub fn render(&self, world: &World) -> Canvas {
         let mut canvas = Canvas::new(self.hsize, self.vsize);
 
         for y in 0..self.vsize {
@@ -85,6 +87,38 @@ impl Camera {
                 canvas.write_pixel(x, y, color);
             }
         }
+
+        canvas
+    }
+
+    pub fn render_parallel(&self, world: fn() -> World, n_lines: usize) -> Canvas {
+        let mut canvas = Canvas::new(self.hsize, self.vsize);
+
+        canvas.chunks_mut(n_lines).enumerate().for_each(|(i, chunk)| {
+            println!("{}/{}", i, self.hsize / n_lines);
+
+            let world_copy = world();
+
+            let start_line = i * n_lines;
+            for y in 0..chunk.len() / self.vsize {
+                for x in 0..self.hsize {
+                    let ray = self.ray_for_pixel(x as f64, (y + start_line) as f64);
+                    let color = world_copy.color_at(ray, 5);
+                    let i = x + y * self.vsize;
+                    chunk[i] = color;
+                    // canvas.write_pixel(x, y, color);
+                }
+            }
+        });
+
+        // for y in 0..self.vsize {
+        //     for x in 0..self.hsize {
+        //         let ray = self.ray_for_pixel(x as f64, y as f64);
+        //         let color = world.color_at(ray, 5);
+
+        //         canvas.write_pixel(x, y, color);
+        //     }
+        // }
 
         canvas
     }
@@ -134,7 +168,7 @@ mod tests {
     // Page 103
     #[test]
     fn constructing_a_ray_through_the_center_of_canvas() {
-        let mut c = Camera::new(201, 101, PI / 2.0);
+        let c = Camera::new(201, 101, PI / 2.0);
         let r = c.ray_for_pixel(100.0, 50.0);
 
         assert_eq!(r.origin, Point::new(0.0, 0.0, 0.0));
@@ -145,7 +179,7 @@ mod tests {
     // Page 103
     #[test]
     fn constructing_a_ray_through_a_corner_of_the_canvas() {
-        let mut c = Camera::new(201, 101, PI / 2.0);
+        let c = Camera::new(201, 101, PI / 2.0);
         let r = c.ray_for_pixel(0.0, 0.0);
 
         assert_eq!(r.origin, Point::new(0.0, 0.0, 0.0));

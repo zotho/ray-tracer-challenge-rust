@@ -54,6 +54,14 @@ impl Color {
         }
     }
 
+    pub fn to_u8(&self) -> [u8; 3] {
+        [
+            (self.red * 255.0) as u8,
+            (self.green * 255.0) as u8,
+            (self.blue * 255.0) as u8,
+        ]
+    }
+
     /// Get an array of the  parts of a `Color` as [`u8`] in string format. The
     /// returned array is `["rrr", "ggg", "bbb"]
     ///
