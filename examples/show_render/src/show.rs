@@ -13,14 +13,6 @@ use rustic_ray::{
 
 use crate::view::View;
 
-fn window_conf() -> Conf {
-    Conf {
-        window_title: "Show".to_owned(),
-        fullscreen: false,
-        ..Default::default()
-    }
-}
-
 #[derive(Debug, Default)]
 struct WindowFields {
     from: String,
@@ -61,6 +53,16 @@ impl WindowFields {
             ("Up:  ", &mut self.up),
             ("FOV: ", &mut self.fov),
         ]
+    }
+}
+
+fn window_conf() -> Conf {
+    Conf {
+        window_title: "Show".to_owned(),
+        fullscreen: false,
+        window_width: 1000,
+        window_height: 1000,
+        ..Default::default()
     }
 }
 

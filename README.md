@@ -2,6 +2,15 @@
 
 Implementing the book [The Ray Tracer Challenge by Jamis Buck](https://www.barnesandnoble.com/w/the-ray-tracer-challenge-jamis-buck/1127035142) in the [Rust](https://www.rust-lang.org/) programming language.
 
+## Startup
+
+```bash
+ # For help
+cargo run --release --example show_render -- --help
+# For show window with render
+cargo run --release --example show_render -- --vsize 1000 --hsize 1000 --batch-size 50 --parallel --show
+```
+
 ## Folder Structure
 
 There are individual projects for each chapter in thier respective folder. The goal is to keep each chapter separate from one another simplifying the structure by not having a single workspace with all chapters included. There would also be package naming conflicts.
