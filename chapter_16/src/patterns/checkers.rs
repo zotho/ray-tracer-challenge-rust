@@ -1,10 +1,13 @@
 use super::Pattern;
 use crate::{Color, Matrix, Point, IDENTITY};
+
 use uuid::Uuid;
+use serde::{Serialize, Deserialize};
+use typetag;
 
 /// Two-dimensional *checker* pattern is a repeating pattern of squares, where
 /// two squares of the same color are never adjacent.
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Copy, Clone, PartialEq)]
 pub struct Checkers {
     id: Uuid,
     a: Color,
@@ -25,6 +28,7 @@ impl Checkers {
     }
 }
 
+#[typetag::serde]
 impl Pattern for Checkers {
     fn id(&self) -> Uuid {
         self.id

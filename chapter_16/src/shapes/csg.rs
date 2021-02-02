@@ -1,8 +1,11 @@
 use super::Shape;
 use crate::{Intersection, Material, Matrix, Point, Ray, Vector, IDENTITY};
-use uuid::Uuid;
 
-#[derive(Debug)]
+use uuid::Uuid;
+use serde::{Serialize, Deserialize};
+use typetag;
+
+#[derive(Serialize, Deserialize, Debug)]
 pub struct CSG {
     id: Uuid,
     parent_id: Option<Uuid>,
@@ -13,7 +16,7 @@ pub struct CSG {
     pub material: Material,
 }
 
-#[derive(Debug, Copy, Clone)]
+#[derive(Serialize, Deserialize, Debug, Copy, Clone)]
 pub enum CsgOperation {
     Union,
     Intersection,
@@ -74,6 +77,7 @@ impl CSG {
     }
 }
 
+#[typetag::serde]
 impl Shape for CSG {
     fn id(&self) -> Uuid {
         self.id

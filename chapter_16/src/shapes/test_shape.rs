@@ -4,8 +4,12 @@ use super::Shape;
 use crate::{Intersection, Material, Matrix, Point, Ray, Vector, IDENTITY};
 #[cfg(test)]
 use uuid::Uuid;
+#[cfg(test)]
+use serde::{Serialize, Deserialize};
+#[cfg(test)]
+use typetag;
 
-#[derive(Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 #[cfg(test)]
 pub struct TestShape {
     id: Uuid,
@@ -27,6 +31,7 @@ impl TestShape {
 }
 
 #[cfg(test)]
+#[typetag::serde]
 impl Shape for TestShape {
     fn id(&self) -> Uuid {
         self.id

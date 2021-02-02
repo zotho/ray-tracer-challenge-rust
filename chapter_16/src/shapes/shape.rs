@@ -1,10 +1,13 @@
 use crate::{Intersection, Material, Matrix, Point, Ray, Vector, World};
 use std::{any::Any, fmt};
+
 use uuid::Uuid;
+use typetag;
 
 /// Trait with common functionality for types that describe an object or
 /// a graphical primitive. Abstraction of the implementation for a particular
 /// shape.
+#[typetag::serde(tag = "type")]
 pub trait Shape: Any + fmt::Debug {
     fn as_any(&self) -> Option<&dyn Any> {
         None

@@ -1,12 +1,14 @@
 use crate::float_eq;
 use std::ops::{Add, Mul, Neg, Sub};
 
+use serde::{Serialize, Deserialize};
+
 /// An element representing pixel on the drawing canvas.
 ///
 /// A `Color` element is comprised of three floating point numbers ([`f64`])
 /// ranging from 0.0 to 1.0. The three numbers represents the factor of red,
 /// green, or blue the `Color` will have.
-#[derive(Debug, Copy, Clone)]
+#[derive(Serialize, Deserialize, Debug, Copy, Clone)]
 pub struct Color {
     /// The amount of `red` is in the `color`.
     pub red: f64,
@@ -54,11 +56,20 @@ impl Color {
         }
     }
 
-    pub fn to_u8(&self) -> [u8; 3] {
+    pub fn to_rgb_u8(&self) -> [u8; 3] {
         [
             (self.red * 255.0) as u8,
             (self.green * 255.0) as u8,
             (self.blue * 255.0) as u8,
+        ]
+    }
+
+    pub fn to_rgba_u8(&self) -> [u8; 4] {
+        [
+            (self.red * 255.0) as u8,
+            (self.green * 255.0) as u8,
+            (self.blue * 255.0) as u8,
+            255,
         ]
     }
 

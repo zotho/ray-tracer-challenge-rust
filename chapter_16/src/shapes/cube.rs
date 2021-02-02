@@ -2,11 +2,14 @@ use super::Shape;
 #[allow(unused_imports)]
 use crate::Transformation;
 use crate::{float_cmp, Intersection, Material, Matrix, Point, Ray, Vector, IDENTITY};
+
 use uuid::Uuid;
+use serde::{Serialize, Deserialize};
+use typetag;
 
 /// A three-dimensional solid object bounded by six square sides, with three
 /// meeting at each vertex. A default cube is 1 unit size in all directions.
-#[derive(Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Cube {
     id: Uuid,
     parent_id: Option<Uuid>,
@@ -42,6 +45,7 @@ impl Cube {
     }
 }
 
+#[typetag::serde]
 impl Shape for Cube {
     fn id(&self) -> Uuid {
         self.id

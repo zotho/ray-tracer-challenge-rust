@@ -4,10 +4,12 @@ use std::{
     ops::{Index, IndexMut, Mul},
 };
 
+use serde::{Serialize, Deserialize};
+
 /// Matrix (plural matrices) is a rectangular array of numbers in rows and
 /// columns that is treated as a single entity and manipulated according
 /// to particular rules.
-#[derive(Debug, Clone, Copy)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy)]
 pub struct Matrix {
     data: [[f64; 4]; 4],
     inverse: [[f64; 4]; 4],

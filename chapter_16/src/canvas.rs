@@ -96,10 +96,18 @@ impl Canvas {
         buffer
     }
 
-    pub fn canvas_to_buffer(&self) -> Vec<u8> {
+    pub fn canvas_to_rgb_buffer(&self) -> Vec<u8> {
         let mut buffer = Vec::with_capacity(self.pixels.len() * 3);
         for color in &self.pixels {
-            buffer.extend(color.to_u8().iter());
+            buffer.extend(color.to_rgb_u8().iter());
+        }
+        buffer
+    }
+
+    pub fn canvas_to_rgba_buffer(&self) -> Vec<u8> {
+        let mut buffer = Vec::with_capacity(self.pixels.len() * 4);
+        for color in &self.pixels {
+            buffer.extend(color.to_rgba_u8().iter());
         }
         buffer
     }

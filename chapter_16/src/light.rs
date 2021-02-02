@@ -1,3 +1,5 @@
+use serde::{Serialize, Deserialize};
+
 use crate::{Color, Point};
 
 /// A light source with no size, existing at a single point in space.
@@ -5,7 +7,7 @@ use crate::{Color, Point};
 /// A `PointLight` is defined by its position in space and the intensity or how
 /// bright the light it is. The intensity also describes the color of the
 /// light source.
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Copy, Clone, PartialEq)]
 pub struct PointLight {
     /// Brightness and color of the light
     pub intensity: Color,

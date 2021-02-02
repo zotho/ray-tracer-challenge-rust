@@ -2,10 +2,12 @@ use std::any::Any;
 
 use crate::{Intersection, Material, Matrix, Point, Ray, Vector, EPSILON, IDENTITY};
 use uuid::Uuid;
+use serde::{Serialize, Deserialize};
+use typetag;
 
 use super::Shape;
 
-#[derive(Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Triangle {
     id: Uuid,
     parent_id: Option<Uuid>,
@@ -70,6 +72,7 @@ impl Triangle {
     }
 }
 
+#[typetag::serde]
 impl Shape for Triangle {
     fn id(&self) -> Uuid {
         self.id

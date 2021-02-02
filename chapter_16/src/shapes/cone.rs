@@ -3,7 +3,10 @@ use super::Shape;
 use crate::Transformation;
 use crate::{float_eq, Intersection, Material, Matrix, Point, Ray, Vector, EPSILON, IDENTITY};
 use std::f64::{INFINITY, NEG_INFINITY};
+
 use uuid::Uuid;
+use serde::{Serialize, Deserialize};
+use typetag;
 
 /// Not a cone in the natural sense but a double-napped code. Two cones
 /// "nose to nose", with one cone balanced perfectly on the other.
@@ -11,7 +14,7 @@ use uuid::Uuid;
 /// A `Cone` has a default radius of 1 unit and are infinity in both `+y` and
 /// `-y`. `Cone` can be truncated in either `y` direction or both. They can
 /// also be opened at each end or closed. By default they are open.
-#[derive(Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Cone {
     id: Uuid,
     parent_id: Option<Uuid>,
@@ -73,6 +76,7 @@ impl Cone {
     }
 }
 
+#[typetag::serde]
 impl Shape for Cone {
     fn id(&self) -> Uuid {
         self.id

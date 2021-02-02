@@ -1,5 +1,7 @@
 use crate::{patterns::Pattern, shapes::Shape, Color, Point, PointLight, Vector};
 
+use serde::{Serialize, Deserialize};
+
 /// Encapsulates the attributes from the Phong reflection model.
 ///
 /// *Ambient reflection* is background light, or light reflected from other
@@ -17,7 +19,7 @@ use crate::{patterns::Pattern, shapes::Shape, Color, Point, PointLight, Vector};
 /// highlight.
 ///
 /// Buck, Jamis "The Ray Tracer Challenge" (84)
-#[derive(Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 pub struct Material {
     /// Color of the material.
     pub color: Color,

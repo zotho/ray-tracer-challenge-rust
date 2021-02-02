@@ -3,12 +3,14 @@ use super::Shape;
 use crate::Transformation;
 use crate::{Intersection, Material, Matrix, Point, Ray, Vector, EPSILON, IDENTITY};
 use uuid::Uuid;
+use serde::{Serialize, Deserialize};
+use typetag;
 
 /// A perfectly flat surface that extends infinitely in two dimensions.
 ///
 /// The place extends infinitely far in both teh `x` and `z` dimensions passing
 /// through the origin.
-#[derive(Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Plane {
     id: Uuid,
     parent_id: Option<Uuid>,
@@ -30,6 +32,7 @@ impl Plane {
     }
 }
 
+#[typetag::serde]
 impl Shape for Plane {
     fn id(&self) -> Uuid {
         self.id

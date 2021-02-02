@@ -3,11 +3,13 @@ use super::Shape;
 use crate::Transformation;
 use crate::{Intersection, Material, Matrix, Point, Ray, Vector, IDENTITY};
 use uuid::Uuid;
+use serde::{Serialize, Deserialize};
+use typetag;
 
 /// A sphere is a three-dimensional solid figure which is perfectly round in
 /// shape and every point on its surface is equidistant from the point
 /// of the origin.
-#[derive(Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 pub struct Sphere {
     id: Uuid,
     parent_id: Option<Uuid>,
@@ -51,6 +53,7 @@ impl Default for Sphere {
     }
 }
 
+#[typetag::serde]
 impl Shape for Sphere {
     fn id(&self) -> Uuid {
         self.id

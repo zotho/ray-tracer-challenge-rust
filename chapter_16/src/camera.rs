@@ -1,3 +1,6 @@
+use std::io::Write;
+use std::sync::atomic::{AtomicUsize, Ordering};
+
 #[allow(unused_imports)]
 use crate::Color;
 use crate::{Canvas, Matrix, Point, Ray, World, IDENTITY};
@@ -91,34 +94,32 @@ impl Camera {
         canvas
     }
 
-    pub fn render_parallel(&self, world: fn() -> World, n_lines: usize) -> Canvas {
-        let mut canvas = Canvas::new(self.hsize, self.vsize);
+    pub fn render_parallel(&self, serialized_world: &str, n_lines: usize) -> Canvas {
+        let mut canvas = Canvas::new(self.vsize, self.hsize);
+        let n_chunks = self.hsize / n_lines;
+
+        let counter = AtomicUsize::new(0);
 
         canvas.chunks_mut(n_lines).enumerate().for_each(|(i, chunk)| {
-            println!("{}/{}", i, self.hsize / n_lines);
-
-            let world_copy = world();
+            let world_copy = World::from_str(serialized_world);
 
             let start_line = i * n_lines;
             for y in 0..chunk.len() / self.vsize {
-                for x in 0..self.hsize {
+                for x in 0..self.vsize {
                     let ray = self.ray_for_pixel(x as f64, (y + start_line) as f64);
                     let color = world_copy.color_at(ray, 5);
+
                     let i = x + y * self.vsize;
                     chunk[i] = color;
-                    // canvas.write_pixel(x, y, color);
                 }
             }
+
+            counter.fetch_add(1, Ordering::Relaxed);
+            print!("\r{}/{}", counter.load(Ordering::Relaxed), n_chunks);
+            std::io::stdout().flush().unwrap();
         });
 
-        // for y in 0..self.vsize {
-        //     for x in 0..self.hsize {
-        //         let ray = self.ray_for_pixel(x as f64, y as f64);
-        //         let color = world.color_at(ray, 5);
-
-        //         canvas.write_pixel(x, y, color);
-        //     }
-        // }
+        println!();
 
         canvas
     }

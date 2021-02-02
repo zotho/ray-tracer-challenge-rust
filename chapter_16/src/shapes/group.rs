@@ -3,8 +3,10 @@ use std::any::Any;
 use super::Shape;
 use crate::{Intersection, Material, Matrix, Point, Ray, Vector, IDENTITY};
 use uuid::Uuid;
+use serde::{Serialize, Deserialize};
+use typetag;
 
-#[derive(Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Group {
     id: Uuid,
     parent_id: Option<Uuid>,
@@ -39,6 +41,7 @@ impl Group {
     }
 }
 
+#[typetag::serde]
 impl Shape for Group {
     fn id(&self) -> Uuid {
         self.id

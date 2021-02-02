@@ -1,10 +1,13 @@
 use super::Pattern;
 use crate::{Color, Matrix, Point, IDENTITY};
+
 use uuid::Uuid;
+use serde::{Serialize, Deserialize};
+use typetag;
 
 /// A ring pattern depending on the `x` and `z` dimensions to decide which
 /// [`Color`] to return.
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Copy, Clone, PartialEq)]
 pub struct Ring {
     id: Uuid,
     a: Color,
@@ -25,6 +28,7 @@ impl Ring {
     }
 }
 
+#[typetag::serde]
 impl Pattern for Ring {
     fn id(&self) -> Uuid {
         self.id

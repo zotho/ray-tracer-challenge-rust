@@ -1,10 +1,13 @@
 use super::Pattern;
 use crate::{Color, Matrix, Point, IDENTITY};
+
 use uuid::Uuid;
+use serde::{Serialize, Deserialize};
+use typetag;
 
 /// A blend of two colors, linearly interpolating from one to the other as the
 /// `x` coordinate changes
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Copy, Clone, PartialEq)]
 pub struct Gradient {
     id: Uuid,
     a: Color,
@@ -25,6 +28,7 @@ impl Gradient {
     }
 }
 
+#[typetag::serde]
 impl Pattern for Gradient {
     fn id(&self) -> Uuid {
         self.id

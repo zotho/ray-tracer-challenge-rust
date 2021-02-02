@@ -4,13 +4,15 @@ use std::{
     ops::{Add, Div, Mul, Neg, Sub},
 };
 
+use serde::{Serialize, Deserialize};
+
 /// An element that has magnitude and direction that is commonly
 /// represented by a directed line segment whose length represents the
 /// magnitude and whose orientation in space represents the direction.
 ///
 /// It is assumed a `Vector` has an initial point at the origin and has
 /// three floating point numbers ([`f64`]) representing the terminal point.
-#[derive(Debug, Copy, Clone)]
+#[derive(Serialize, Deserialize, Debug, Copy, Clone)]
 pub struct Vector {
     /// The distance the terminal point of the vector is from the origin
     /// measured along the X axis.

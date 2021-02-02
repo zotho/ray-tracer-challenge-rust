@@ -5,9 +5,11 @@ use std::{
     ops::{Add, Div, Mul, Neg, Sub},
 };
 
+use serde::{Serialize, Deserialize};
+
 /// An element with three floating point numbers ([`f64`]) which measure the
 /// distance in space the point is form the origin.
-#[derive(Debug, Copy, Clone)]
+#[derive(Serialize, Deserialize, Debug, Copy, Clone)]
 pub struct Point {
     /// The distance the point is from the origin measured along the X axis.
     pub x: f64,

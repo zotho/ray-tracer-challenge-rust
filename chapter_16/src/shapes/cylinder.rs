@@ -4,6 +4,8 @@ use crate::Transformation;
 use crate::{float_eq, Intersection, Material, Matrix, Point, Ray, Vector, EPSILON, IDENTITY};
 use std::f64::{INFINITY, NEG_INFINITY};
 use uuid::Uuid;
+use serde::{Serialize, Deserialize};
+use typetag;
 
 /// A solid geometric figure with straight parallel sides and a circular or oval
 /// cross section.
@@ -11,7 +13,7 @@ use uuid::Uuid;
 /// A cylinder has a default radius of 1 unit and are infinity in both `+y` and
 /// `-y`. Cylinders can be truncated in either `y` direction or both. They can
 /// also be opened at each end or closed. By default they are open.
-#[derive(Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Cylinder {
     pub id: Uuid,
     pub parent_id: Option<Uuid>,
@@ -73,6 +75,7 @@ impl Cylinder {
     }
 }
 
+#[typetag::serde]
 impl Shape for Cylinder {
     fn id(&self) -> Uuid {
         self.id

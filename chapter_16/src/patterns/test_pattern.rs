@@ -4,8 +4,12 @@ use super::Pattern;
 use crate::{Color, Matrix, Point, IDENTITY};
 #[cfg(test)]
 use uuid::Uuid;
+#[cfg(test)]
+use serde::{Serialize, Deserialize};
+#[cfg(test)]
+use typetag;
 
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Copy, Clone, PartialEq)]
 #[cfg(test)]
 pub struct TestPattern {
     id: Uuid,
@@ -23,6 +27,7 @@ impl TestPattern {
 }
 
 #[cfg(test)]
+#[typetag::serde]
 impl Pattern for TestPattern {
     fn id(&self) -> Uuid {
         self.id

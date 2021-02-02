@@ -1,9 +1,12 @@
 use super::Pattern;
 use crate::{Color, Matrix, Point, IDENTITY};
+
 use uuid::Uuid;
+use serde::{Serialize, Deserialize};
+use typetag;
 
 /// As the `x` coordinate changes, the pattern alternates between the colors.
-#[derive(Debug, Copy, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Copy, Clone, PartialEq)]
 pub struct Stripe {
     id: Uuid,
     pub a: Color,
@@ -36,6 +39,7 @@ impl Stripe {
     }
 }
 
+#[typetag::serde]
 impl Pattern for Stripe {
     fn id(&self) -> Uuid {
         self.id

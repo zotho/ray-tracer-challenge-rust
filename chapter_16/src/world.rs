@@ -1,4 +1,5 @@
 use uuid::Uuid;
+use serde::{Serialize, Deserialize};
 
 use crate::{
     shapes::Shape, shapes::Sphere, Color, Colors, Computations, Intersection, Material, Point,
@@ -9,7 +10,7 @@ use crate::{
 ///
 /// Routines for intersecting that world with a ray and computer the colors for
 /// intersections.
-#[derive(Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct World {
     // Light source of the world.
     pub light: Option<PointLight>,
@@ -23,6 +24,10 @@ impl World {
             light: None,
             objects: Vec::new(),
         }
+    }
+
+    pub fn from_str(serialized_world: &str) -> Self {
+        serde_json::from_str(serialized_world).unwrap()
     }
 
     /// Add an `object` to the world `self`.

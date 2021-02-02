@@ -2,8 +2,11 @@
 use crate::Transformation;
 use crate::{shapes::Shape, Color, Matrix, Point};
 use std::fmt;
-use uuid::Uuid;
 
+use uuid::Uuid;
+use typetag;
+
+#[typetag::serde(tag = "type")]
 pub trait Pattern: fmt::Debug {
     /// Get the unique identifier for a pattern.
     fn id(&self) -> Uuid;
