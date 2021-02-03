@@ -4,7 +4,7 @@ use std::{
     ops::{Add, Div, Mul, Neg, Sub},
 };
 
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// An element that has magnitude and direction that is commonly
 /// represented by a directed line segment whose length represents the
@@ -141,6 +141,16 @@ impl Vector {
     ///
     pub fn reflect(self, normal: Vector) -> Vector {
         self - normal * 2.0 * self.dot(normal)
+    }
+
+    /// Rotate vector by Y axis
+    /// See: https://stackoverflow.com/questions/14607640/rotating-a-vector-in-3d-space
+    pub fn rotate_y(self, angle: f64) -> Vector {
+        let (sin, cos) = angle.sin_cos();
+        let Vector { x, y, z } = self;
+        let x1 = x * cos - z * sin;
+        let z1 = x * sin + z * cos;
+        Vector { x: x1, y, z: z1 }
     }
 }
 

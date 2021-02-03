@@ -2,3 +2,5 @@
 *.png
 *.ppm
 .idea
+.DS_Store
+default_world.json

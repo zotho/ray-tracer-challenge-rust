@@ -2,11 +2,10 @@ use std::f64::consts::PI;
 
 use clap::Clap;
 
-use rustic_ray::{
-    Camera, Point, Transformation, Vector, 
-};
+use rustic_ray::{Camera, Point, Transformation, Vector};
 
 mod elapsed;
+mod form_fields;
 mod new_world;
 mod render;
 mod show;

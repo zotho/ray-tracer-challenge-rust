@@ -1,9 +1,9 @@
 use std::any::Any;
 
 use crate::{Intersection, Material, Matrix, Point, Ray, Vector, EPSILON, IDENTITY};
-use uuid::Uuid;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 use typetag;
+use uuid::Uuid;
 
 use super::Shape;
 

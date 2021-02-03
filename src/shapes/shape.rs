@@ -1,8 +1,8 @@
 use crate::{Intersection, Material, Matrix, Point, Ray, Vector, World};
 use std::{any::Any, fmt};
 
-use uuid::Uuid;
 use typetag;
+use uuid::Uuid;
 
 /// Trait with common functionality for types that describe an object or
 /// a graphical primitive. Abstraction of the implementation for a particular

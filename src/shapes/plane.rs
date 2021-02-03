@@ -2,9 +2,9 @@ use super::Shape;
 #[allow(unused_imports)]
 use crate::Transformation;
 use crate::{Intersection, Material, Matrix, Point, Ray, Vector, EPSILON, IDENTITY};
-use uuid::Uuid;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 use typetag;
+use uuid::Uuid;
 
 /// A perfectly flat surface that extends infinitely in two dimensions.
 ///

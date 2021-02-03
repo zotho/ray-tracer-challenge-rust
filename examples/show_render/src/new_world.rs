@@ -2,7 +2,7 @@ use std::f64::consts::PI;
 
 use rustic_ray::{
     patterns::Checkers,
-    shapes::{Shape, CSG, CsgOperation, Plane, Cube, Sphere},
+    shapes::{CsgOperation, Cube, Plane, Shape, Sphere, CSG},
     Color, Colors, Point, PointLight, Transformation, World,
 };
 

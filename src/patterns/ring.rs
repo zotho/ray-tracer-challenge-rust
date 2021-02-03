@@ -1,9 +1,9 @@
 use super::Pattern;
 use crate::{Color, Matrix, Point, IDENTITY};
 
-use uuid::Uuid;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 use typetag;
+use uuid::Uuid;
 
 /// A ring pattern depending on the `x` and `z` dimensions to decide which
 /// [`Color`] to return.

@@ -4,7 +4,7 @@ use std::{
     ops::{Index, IndexMut, Mul},
 };
 
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// Matrix (plural matrices) is a rectangular array of numbers in rows and
 /// columns that is treated as a single entity and manipulated according

@@ -100,24 +100,27 @@ impl Camera {
 
         let counter = AtomicUsize::new(0);
 
-        canvas.chunks_mut(n_lines).enumerate().for_each(|(i, chunk)| {
-            let world_copy = World::from_str(serialized_world);
+        canvas
+            .chunks_mut(n_lines)
+            .enumerate()
+            .for_each(|(i, chunk)| {
+                let world_copy = World::from_str(serialized_world);
 
-            let start_line = i * n_lines;
-            for y in 0..chunk.len() / self.vsize {
-                for x in 0..self.vsize {
-                    let ray = self.ray_for_pixel(x as f64, (y + start_line) as f64);
-                    let color = world_copy.color_at(ray, 5);
+                let start_line = i * n_lines;
+                for y in 0..chunk.len() / self.vsize {
+                    for x in 0..self.vsize {
+                        let ray = self.ray_for_pixel(x as f64, (y + start_line) as f64);
+                        let color = world_copy.color_at(ray, 5);
 
-                    let i = x + y * self.vsize;
-                    chunk[i] = color;
+                        let i = x + y * self.vsize;
+                        chunk[i] = color;
+                    }
                 }
-            }
 
-            counter.fetch_add(1, Ordering::Relaxed);
-            print!("\r{}/{}", counter.load(Ordering::Relaxed), n_chunks);
-            std::io::stdout().flush().unwrap();
-        });
+                counter.fetch_add(1, Ordering::Relaxed);
+                print!("\r{}/{}", counter.load(Ordering::Relaxed), n_chunks);
+                std::io::stdout().flush().unwrap();
+            });
 
         println!();
 

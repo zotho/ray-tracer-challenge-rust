@@ -1,9 +1,9 @@
 use super::Pattern;
 use crate::{Color, Matrix, Point, IDENTITY};
 
-use uuid::Uuid;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 use typetag;
+use uuid::Uuid;
 
 /// Two-dimensional *checker* pattern is a repeating pattern of squares, where
 /// two squares of the same color are never adjacent.

@@ -1,10 +1,8 @@
 use image;
 
-use rustic_ray::{
-    Camera, World
-};
+use rustic_ray::{Camera, World};
 
-use crate::{Opts, elapsed};
+use crate::{elapsed, Opts};
 
 pub fn render(serialized_world: &str, camera: Camera, opts: &Opts) {
     elapsed!(
@@ -21,5 +19,6 @@ pub fn render(serialized_world: &str, camera: Camera, opts: &Opts) {
         canvas.width as u32,
         canvas.height as u32,
         image::ColorType::Rgb8,
-    ).unwrap();
+    )
+    .unwrap();
 }

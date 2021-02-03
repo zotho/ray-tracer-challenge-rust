@@ -3,8 +3,8 @@ use crate::Transformation;
 use crate::{shapes::Shape, Color, Matrix, Point};
 use std::fmt;
 
-use uuid::Uuid;
 use typetag;
+use uuid::Uuid;
 
 #[typetag::serde(tag = "type")]
 pub trait Pattern: fmt::Debug {

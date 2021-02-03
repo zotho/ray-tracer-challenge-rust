@@ -1,9 +1,9 @@
 use super::Pattern;
 use crate::{Color, Matrix, Point, IDENTITY};
 
-use uuid::Uuid;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 use typetag;
+use uuid::Uuid;
 
 /// A blend of two colors, linearly interpolating from one to the other as the
 /// `x` coordinate changes

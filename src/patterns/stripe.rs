@@ -1,9 +1,9 @@
 use super::Pattern;
 use crate::{Color, Matrix, Point, IDENTITY};
 
-use uuid::Uuid;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 use typetag;
+use uuid::Uuid;
 
 /// As the `x` coordinate changes, the pattern alternates between the colors.
 #[derive(Serialize, Deserialize, Debug, Copy, Clone, PartialEq)]

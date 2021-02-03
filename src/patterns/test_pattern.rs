@@ -3,11 +3,11 @@ use super::Pattern;
 #[cfg(test)]
 use crate::{Color, Matrix, Point, IDENTITY};
 #[cfg(test)]
-use uuid::Uuid;
-#[cfg(test)]
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 #[cfg(test)]
 use typetag;
+#[cfg(test)]
+use uuid::Uuid;
 
 #[derive(Serialize, Deserialize, Debug, Copy, Clone, PartialEq)]
 #[cfg(test)]

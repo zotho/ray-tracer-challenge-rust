@@ -1,6 +1,6 @@
 use crate::{patterns::Pattern, shapes::Shape, Color, Point, PointLight, Vector};
 
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// Encapsulates the attributes from the Phong reflection model.
 ///

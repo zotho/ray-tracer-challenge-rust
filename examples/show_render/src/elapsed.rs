@@ -17,7 +17,6 @@ macro_rules! elapsed {
     }
 }
 
-
 // #[macro_export]
 // macro_rules! elapsed {
 //     ( $($func: expr);+ $(;)?) => (

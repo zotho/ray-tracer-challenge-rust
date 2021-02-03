@@ -4,9 +4,9 @@ use crate::Transformation;
 use crate::{float_eq, Intersection, Material, Matrix, Point, Ray, Vector, EPSILON, IDENTITY};
 use std::f64::{INFINITY, NEG_INFINITY};
 
-use uuid::Uuid;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 use typetag;
+use uuid::Uuid;
 
 /// Not a cone in the natural sense but a double-napped code. Two cones
 /// "nose to nose", with one cone balanced perfectly on the other.

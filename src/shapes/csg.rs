@@ -1,9 +1,9 @@
 use super::Shape;
 use crate::{Intersection, Material, Matrix, Point, Ray, Vector, IDENTITY};
 
-use uuid::Uuid;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 use typetag;
+use uuid::Uuid;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct CSG {

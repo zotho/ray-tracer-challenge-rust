@@ -2,9 +2,9 @@ use super::Shape;
 #[allow(unused_imports)]
 use crate::Transformation;
 use crate::{Intersection, Material, Matrix, Point, Ray, Vector, IDENTITY};
-use uuid::Uuid;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 use typetag;
+use uuid::Uuid;
 
 /// A sphere is a three-dimensional solid figure which is perfectly round in
 /// shape and every point on its surface is equidistant from the point

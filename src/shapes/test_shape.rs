@@ -3,11 +3,11 @@ use super::Shape;
 #[cfg(test)]
 use crate::{Intersection, Material, Matrix, Point, Ray, Vector, IDENTITY};
 #[cfg(test)]
-use uuid::Uuid;
-#[cfg(test)]
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 #[cfg(test)]
 use typetag;
+#[cfg(test)]
+use uuid::Uuid;
 
 #[derive(Serialize, Deserialize, Debug)]
 #[cfg(test)]

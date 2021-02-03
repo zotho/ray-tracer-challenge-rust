@@ -2,10 +2,10 @@ use super::Shape;
 #[allow(unused_imports)]
 use crate::Transformation;
 use crate::{float_eq, Intersection, Material, Matrix, Point, Ray, Vector, EPSILON, IDENTITY};
+use serde::{Deserialize, Serialize};
 use std::f64::{INFINITY, NEG_INFINITY};
-use uuid::Uuid;
-use serde::{Serialize, Deserialize};
 use typetag;
+use uuid::Uuid;
 
 /// A solid geometric figure with straight parallel sides and a circular or oval
 /// cross section.

@@ -1,7 +1,7 @@
 use crate::float_eq;
 use std::ops::{Add, Mul, Neg, Sub};
 
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// An element representing pixel on the drawing canvas.
 ///

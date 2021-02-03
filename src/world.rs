@@ -1,5 +1,5 @@
+use serde::{Deserialize, Serialize};
 use uuid::Uuid;
-use serde::{Serialize, Deserialize};
 
 use crate::{
     shapes::Shape, shapes::Sphere, Color, Colors, Computations, Intersection, Material, Point,

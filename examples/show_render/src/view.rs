@@ -3,11 +3,9 @@ use std::f64::consts::PI;
 use clap::Clap;
 use macroquad::prelude::*;
 
-use rustic_ray::{
-    Camera, Point, Transformation, Vector, 
-};
+use rustic_ray::{Camera, Point, Transformation, Vector};
 
-use crate::{Opts, elapsed, load_world};
+use crate::{elapsed, load_world, Opts};
 
 pub struct View {
     pub texture: Texture2D,
@@ -21,6 +19,14 @@ pub struct View {
 }
 
 impl View {
+    pub fn rotate_y(&mut self, angle: f64) {
+        self.need_update = true;
+
+        let dir = self.to - self.from;
+        let new_dir = dir.rotate_y(angle);
+        self.to = self.from + new_dir;
+    }
+
     pub fn new() -> Self {
         let opts: Opts = Opts::parse();
 
@@ -30,11 +36,7 @@ impl View {
         let from = Point::new(0.0, 1.5, -8.0);
         let to = Point::new(0.0, 1.0, 0.0);
         let up = Vector::new(0.0, 1.0, 0.0);
-        camera.transform = Transformation::view_transform(
-            from,
-            to,
-            up,
-        );
+        camera.transform = Transformation::view_transform(from, to, up);
 
         let serialized_world = load_world(opts.input.as_deref());
 
@@ -45,12 +47,7 @@ impl View {
             quad_context: ctx, ..
         } = unsafe { get_internal_gl() };
 
-        let texture = Texture2D::from_rgba8(
-            ctx,
-            canvas.width as u16,
-            canvas.height as u16,
-            &bytes
-        );
+        let texture = Texture2D::from_rgba8(ctx, canvas.width as u16, canvas.height as u16, &bytes);
 
         View {
             texture,
@@ -70,11 +67,7 @@ impl View {
         }
 
         let mut camera = Camera::new(self.opts.hsize, self.opts.vsize, self.fov);
-        camera.transform = Transformation::view_transform(
-            self.from,
-            self.to,
-            self.up,
-        );
+        camera.transform = Transformation::view_transform(self.from, self.to, self.up);
 
         elapsed!(
             let canvas = camera.render_parallel(&self.serialized_world, self.opts.batch_size);
@@ -91,7 +84,7 @@ impl View {
                 bytes,
                 width: canvas.width as u16,
                 height: canvas.height as u16,
-            }
+            },
         );
         self.need_update = false;
     }

@@ -5,7 +5,7 @@ use std::{
     ops::{Add, Div, Mul, Neg, Sub},
 };
 
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// An element with three floating point numbers ([`f64`]) which measure the
 /// distance in space the point is form the origin.

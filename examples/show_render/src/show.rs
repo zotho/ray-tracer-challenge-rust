@@ -1,58 +1,37 @@
 use macroquad::prelude::*;
 use megaui_macroquad::{
     draw_megaui, draw_window,
-    megaui::{
-        self, hash,
-    },
+    megaui::{self, hash},
     WindowParams,
 };
 
-use rustic_ray::{
-    Point, Vector, 
-};
-
-use crate::view::View;
+use crate::{form_fields::FormFields, view::View};
 
 #[derive(Debug, Default)]
-struct WindowFields {
-    from: String,
-    to: String,
-    up: String,
-    fov: String,
+pub struct Inputs {
+    mouse_x: f32,
+    mouse_y: f32,
+    mouse_dx: f32,
+    mouse_dy: f32,
 }
 
-impl WindowFields {
-    pub fn from_view(view: &View) -> Self {
-        WindowFields {
-            from: serde_json::to_string(&view.from).unwrap(),
-            to: serde_json::to_string(&view.to).unwrap(),
-            up: serde_json::to_string(&view.up).unwrap(),
-            fov: view.fov.to_string(),
+impl Inputs {
+    pub fn new() -> Self {
+        let (mouse_x, mouse_y) = mouse_position();
+        Inputs {
+            mouse_x,
+            mouse_y,
+            mouse_dx: 0.0,
+            mouse_dy: 0.0,
         }
     }
 
-    pub fn to_view(&self, view: &mut View) -> Result<(), serde_json::Error> {
-        let from: Point = serde_json::from_str(&self.from)?;
-        let to: Point = serde_json::from_str(&self.to)?;
-        let up: Vector = serde_json::from_str(&self.up)?;
-        let fov: f64 = self.fov.parse().unwrap();
-        if from != view.from || to != view.to || up != view.up || fov != view.fov {
-            view.from = from;
-            view.to = to;
-            view.up = up;
-            view.fov = fov;
-            view.need_update = true;
-        }
-        Ok(())
-    }
-
-    pub fn as_slice(&mut self) -> [(&str, &mut String); 4] {
-        [
-            ("From:", &mut self.from),
-            ("To:  ", &mut self.to),
-            ("Up:  ", &mut self.up),
-            ("FOV: ", &mut self.fov),
-        ]
+    pub fn update(&mut self) {
+        let (mouse_x, mouse_y) = mouse_position();
+        self.mouse_dx = mouse_x - self.mouse_x;
+        self.mouse_dy = mouse_y - self.mouse_y;
+        self.mouse_x = mouse_x;
+        self.mouse_y = mouse_y;
     }
 }
 
@@ -69,18 +48,20 @@ fn window_conf() -> Conf {
 #[macroquad::main(window_conf)]
 async fn main() {
     let mut view = View::new();
-    let mut win_fields = WindowFields::from_view(&view);
+    let mut win_fields = FormFields::from_view(&view);
+    let mut inputs = Inputs::new();
 
     loop {
         if is_key_pressed(KeyCode::Escape) {
             break;
         }
+        inputs.update();
 
         let sw = screen_width();
         let sh = screen_height();
 
-        let ix = sw / 2.0 - view.width() / 2.0; 
-        let iy = sh / 2.0 - view.height() / 2.0; 
+        let ix = sw / 2.0 - view.width() / 2.0;
+        let iy = sh / 2.0 - view.height() / 2.0;
 
         clear_background(WHITE);
 
@@ -105,11 +86,24 @@ async fn main() {
                         .filter_numbers()
                         .ui(ui, value);
                 }
-            }
+            },
         );
 
         if win_fields.to_view(&mut view).is_err() {
-            win_fields = WindowFields::from_view(&view);
+            win_fields = FormFields::from_view(&view);
+        }
+
+        if is_key_pressed(KeyCode::Left) {
+            view.rotate_y(std::f64::consts::PI / 6.0);
+            win_fields = FormFields::from_view(&view);
+        }
+        if is_key_pressed(KeyCode::Right) {
+            view.rotate_y(-std::f64::consts::PI / 6.0);
+            win_fields = FormFields::from_view(&view);
+        }
+        if inputs.mouse_dx != 0.0 {
+            view.rotate_y(-inputs.mouse_dx as f64 / 100.0);
+            win_fields = FormFields::from_view(&view);
         }
 
         view.update();
